@@ -1,10 +1,15 @@
-import { FC } from 'react'
-import { TButtonRoot } from '../types'
-import { tv } from 'tailwind-variants'
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+
+import { tv, VariantProps } from 'tailwind-variants'
 import { twMerge } from 'tailwind-merge'
 
-export const ButtonRootStyle = tv({
-  base: 'flex border-2 w-fit border-[#E1B168] transition-all duration-300',
+type TButtonRoot = {
+  children: ReactNode
+} & ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof ButtonRootStyle>
+
+const ButtonRootStyle = tv({
+  base: 'flex w-fit border-2 border-[#E1B168] transition-all duration-300',
   variants: {
     style: {
       primary: 'bg-[#E1B168] text-black hover:bg-black hover:text-[#E1B168]',
