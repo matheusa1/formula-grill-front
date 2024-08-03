@@ -29,6 +29,24 @@ const meta = {
         type: { summary: 'string' },
       },
     },
+    fontCase: {
+      control: {
+        type: 'select',
+      },
+      options: ['uppercase', 'lowercase', 'capitalize', 'normal'],
+      table: {
+        defaultValue: { summary: 'uppercase' },
+      },
+    },
+    fontWeight: {
+      control: {
+        type: 'select',
+      },
+      options: ['light', 'normal', 'medium', 'semibold', 'bold'],
+      table: {
+        defaultValue: { summary: 'semibold' },
+      },
+    },
   },
 } satisfies Meta<typeof StorybookButton>
 

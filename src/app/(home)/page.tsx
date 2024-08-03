@@ -3,7 +3,7 @@ import { FC } from 'react'
 const Home: FC = () => {
   return (
     <div className={''}>
-      <h1>Home ui</h1>
+      <h1 className={''}>Home</h1>
     </div>
   )
 }

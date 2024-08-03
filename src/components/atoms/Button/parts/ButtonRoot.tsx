@@ -9,11 +9,11 @@ type TButtonRoot = {
   VariantProps<typeof ButtonRootStyle>
 
 export const ButtonRootStyle = tv({
-  base: 'flex w-fit border-2 border-ferrari-yellow-500 transition-all duration-300 rounded-sm',
+  base: 'flex w-fit border-2 h-fit border-ferrari-yellow-500 transition-all duration-300 rounded-sm',
   variants: {
     style: {
       primary:
-        'bg-ferrari-yellow-500 text-black hover:bg-ferrari-yellow-700 hover:border-ferrari-yellow-700',
+        'bg-ferrari-yellow-500 text-black hover:bg-ferrari-yellow-300 hover:drop-shadow-yellow hover:border-ferrari-yellow-300',
       outline:
         'bg-transparent text-ferrari-yellow-500 hover:bg-ferrari-yellow-500 hover:text-black',
     },

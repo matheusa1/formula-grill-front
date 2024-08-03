@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        yellow: '0 4px 14px rgba(249, 235, 82, 0.5)',
+      },
       colors: {
         ferrari: {
           yellow: {
