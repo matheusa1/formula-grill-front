@@ -31,6 +31,7 @@ export const ButtonRootStyle = tv({
       bold: 'font-bold',
     },
     size: {
+      icon: 'p-px',
       sm: 'px-4 py-1 text-lg',
       md: 'px-10 py-2 text-xl',
       lg: 'px-16 py-3 text-2xl',
@@ -58,6 +59,7 @@ export const ButtonRoot: FC<TButtonRoot> = ({
         ButtonRootStyle({ size, style, fontCase, fontWeight }),
         rest.className,
       )}
+      {...rest}
     >
       {children}
     </button>
