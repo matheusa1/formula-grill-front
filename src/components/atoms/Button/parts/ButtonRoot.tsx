@@ -8,15 +8,30 @@ type TButtonRoot = {
 } & ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof ButtonRootStyle>
 
-const ButtonRootStyle = tv({
-  base: 'flex w-fit border-2 border-[#E1B168] transition-all duration-300',
+export const ButtonRootStyle = tv({
+  base: 'flex w-fit border-2 h-fit border-ferrari-yellow-500 transition-all duration-300 rounded-sm',
   variants: {
     style: {
-      primary: 'bg-[#E1B168] text-black hover:bg-black hover:text-[#E1B168]',
+      primary:
+        'bg-ferrari-yellow-500 text-black hover:bg-ferrari-yellow-300 hover:drop-shadow-yellow hover:border-ferrari-yellow-300',
       outline:
-        'bg-transparent text-[#E1B168] hover:bg-[#E1B168] hover:text-black',
+        'bg-transparent text-ferrari-yellow-500 hover:bg-ferrari-yellow-500 hover:text-black',
+    },
+    fontCase: {
+      uppercase: 'uppercase',
+      lowercase: 'lowercase',
+      capitalize: 'capitalize',
+      normal: 'normal-case',
+    },
+    fontWeight: {
+      light: 'font-light',
+      normal: 'font-normal',
+      medium: 'font-medium',
+      semibold: 'font-semibold',
+      bold: 'font-bold',
     },
     size: {
+      icon: 'p-px',
       sm: 'px-4 py-1 text-lg',
       md: 'px-10 py-2 text-xl',
       lg: 'px-16 py-3 text-2xl',
@@ -25,6 +40,8 @@ const ButtonRootStyle = tv({
   defaultVariants: {
     size: 'md',
     style: 'primary',
+    fontCase: 'uppercase',
+    fontWeight: 'semibold',
   },
 })
 
@@ -32,11 +49,17 @@ export const ButtonRoot: FC<TButtonRoot> = ({
   children,
   size,
   style,
+  fontCase,
+  fontWeight,
   ...rest
 }) => {
   return (
     <button
-      className={twMerge(ButtonRootStyle({ size, style }), rest.className)}
+      className={twMerge(
+        ButtonRootStyle({ size, style, fontCase, fontWeight }),
+        rest.className,
+      )}
+      {...rest}
     >
       {children}
     </button>
