@@ -27,7 +27,7 @@ export const Header: FC = () => {
         <Image
           src={width >= 640 ? Logo : LogoNoText}
           alt={'Logo image'}
-          className="h-10 sm:w-full"
+          className="w-1/3 object-left min-w-fit sm:object-center object-contain h-10 sm:w-full"
         />
         <Button.Root size="sm">
           <Button.Text>Reservar</Button.Text>
