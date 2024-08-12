@@ -1,21 +1,21 @@
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
+import { FC } from 'react'
 
-import { tv, VariantProps } from 'tailwind-variants'
+import { tv } from 'tailwind-variants'
 import { twMerge } from 'tailwind-merge'
-
-type TButtonRoot = {
-  children: ReactNode
-} & ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof ButtonRootStyle>
+import { TButtonRoot } from '../type'
 
 export const ButtonRootStyle = tv({
-  base: 'flex w-fit border-2 h-fit border-ferrari-yellow-500 transition-all duration-300 rounded-sm',
+  base: 'flex size-fit rounded-sm border-2  transition-all duration-300',
   variants: {
     style: {
       primary:
-        'bg-ferrari-yellow-500 text-black hover:bg-ferrari-yellow-300 hover:drop-shadow-yellow hover:border-ferrari-yellow-300',
+        'border-ferrari-yellow-500 bg-ferrari-yellow-500 text-black hover:border-ferrari-yellow-300 hover:bg-ferrari-yellow-300 hover:drop-shadow-yellow',
       outline:
-        'bg-transparent text-ferrari-yellow-500 hover:bg-ferrari-yellow-500 hover:text-black',
+        'border-ferrari-yellow-500 bg-transparent text-ferrari-yellow-500 hover:bg-ferrari-yellow-500 hover:text-black',
+      primaryBlue:
+        'border-mercedes-blue-500 bg-mercedes-blue-500 text-black hover:border-mercedes-blue-300 hover:bg-mercedes-blue-300 hover:drop-shadow-yellow',
+      outlineBlue:
+        'border-mercedes-blue-500 bg-transparent text-mercedes-blue-500 hover:bg-mercedes-blue-500 hover:text-white',
     },
     fontCase: {
       uppercase: 'uppercase',

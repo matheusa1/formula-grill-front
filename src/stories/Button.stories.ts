@@ -23,7 +23,7 @@ const meta = {
       control: {
         type: 'radio',
       },
-      options: ['primary', 'outline'],
+      options: ['primary', 'outline', 'primaryBlue', 'outlineBlue'],
       table: {
         defaultValue: { summary: 'primary' },
         type: { summary: 'string' },
@@ -53,7 +53,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const md: Story = {
+export const Md: Story = {
   args: {
     children: 'Button',
     size: 'md',
@@ -61,7 +61,7 @@ export const md: Story = {
   },
 }
 
-export const lg: Story = {
+export const Lg: Story = {
   args: {
     children: 'Button',
     size: 'lg',
@@ -69,7 +69,7 @@ export const lg: Story = {
   },
 }
 
-export const sm: Story = {
+export const Sm: Story = {
   args: {
     children: 'Button',
     size: 'sm',

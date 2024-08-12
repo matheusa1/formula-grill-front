@@ -17,9 +17,9 @@ export const HeaderItems: FC = () => {
   }
 
   return (
-    <div className={'flex max-w-7xl w-full items-center flex-col'}>
+    <div className={'flex w-full max-w-7xl flex-col items-center'}>
       <div
-        className={`flex sm:h-fit sm:justify-between sm:flex-row sm:w-full flex-col gap-5 items-center overflow-hidden transition-all ${isOpen ? 'h-72' : 'h-0'}`}
+        className={`flex flex-col items-center gap-5 overflow-hidden transition-all sm:h-fit sm:w-full sm:flex-row sm:justify-between ${isOpen ? 'h-72' : 'h-0'}`}
       >
         {routes.map((route, index) => (
           <HeaderItem key={index} path={route.path}>
@@ -35,7 +35,7 @@ export const HeaderItems: FC = () => {
       <div className="sm:hidden">
         <Button.Root size="icon" onClick={toggleOpen} style="outline">
           <ChevronDown
-            className={`h-6 w-6 transition-all duration-500 ${isOpen ? 'rotate-180' : ''}`}
+            className={`size-6 transition-all duration-500 ${isOpen ? 'rotate-180' : ''}`}
           />
         </Button.Root>
       </div>

@@ -12,6 +12,19 @@ const config: Config = {
         yellow: '0 4px 14px rgba(249, 235, 82, 0.5)',
       },
       colors: {
+        mercedes: {
+          blue: {
+            100: '#cdf6f5',
+            200: '#9bedeb',
+            300: '#68e3e2',
+            400: '#36dad8',
+            500: '#04d1ce',
+            600: '#03a7a5',
+            700: '#027d7c',
+            800: '#025452',
+            900: '#012a29',
+          },
+        },
         ferrari: {
           yellow: {
             100: '#fefbdc',

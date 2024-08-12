@@ -14,10 +14,10 @@ export const Header: FC = () => {
   return (
     <header
       className={
-        'flex flex-col bg-black items-center px-5 md:px-20 gap-5 xl:px-64 py-5 xl:gap-10 lg:px-40 lg:gap-5'
+        'flex flex-col items-center gap-5 bg-black p-5 md:px-20 lg:gap-5 lg:px-40 xl:gap-10 xl:px-64'
       }
     >
-      <section className="flex items-center w-full justify-between max-w-7xl">
+      <section className="flex w-full max-w-7xl items-center justify-between">
         {width >= 640 && (
           <Button.Root style={'outline'} size="sm">
             <Button.Text>Entrar</Button.Text>
@@ -27,7 +27,7 @@ export const Header: FC = () => {
         <Image
           src={width >= 640 ? Logo : LogoNoText}
           alt={'Logo image'}
-          className="w-1/3 object-left min-w-fit sm:object-center object-contain h-10 sm:w-full"
+          className="h-10 w-1/3 min-w-fit object-contain object-left sm:w-full sm:object-center"
         />
         <Button.Root size="sm">
           <Button.Text>Reservar</Button.Text>
