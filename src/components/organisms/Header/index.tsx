@@ -7,9 +7,14 @@ import LogoNoText from '@/assets/svg/logoNoText.svg'
 import { Button } from '@/components/atoms/Button'
 import { HeaderItems } from '@/components/molecules/HeaderItems'
 import { useWindow } from '@/hooks/useWindow'
+import { useRouter } from 'next/navigation'
 
 export const Header: FC = () => {
   const { width } = useWindow()
+  const router = useRouter()
+  const handleRedirectToLoginPage = () => {
+    router.push('/login')
+  }
 
   return (
     <header
@@ -19,7 +24,11 @@ export const Header: FC = () => {
     >
       <section className="flex w-full max-w-7xl items-center justify-between">
         {width >= 640 && (
-          <Button.Root style={'outline'} size="sm">
+          <Button.Root
+            style={'outline'}
+            size="sm"
+            onClick={handleRedirectToLoginPage}
+          >
             <Button.Text>Entrar</Button.Text>
           </Button.Root>
         )}

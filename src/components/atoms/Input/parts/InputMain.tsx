@@ -1,3 +1,5 @@
+'use client'
+
 import { FC, useState } from 'react'
 import { TInputMain } from '../types'
 import { tv } from 'tailwind-variants'
@@ -23,13 +25,18 @@ export const InputMainStyle = tv({
   },
 })
 
-export const InputMain: FC<TInputMain> = ({ style, password, ...rest }) => {
-  const [showPassword, setShowPassword] = useState(false)
+export const InputMain: FC<TInputMain> = ({
+  style,
+  password,
+  type,
+  ...rest
+}) => {
+  const [showPassword, setShowPassword] = useState(password ? true : false)
 
   return (
     <div className="flex w-full">
       <input
-        type={showPassword ? 'password' : 'text'}
+        type={type ? type : showPassword ? 'password' : 'text'}
         {...rest}
         className={twMerge(InputMainStyle({ style, password }), rest.className)}
       />

@@ -2,10 +2,10 @@ import { FC } from 'react'
 
 import { tv } from 'tailwind-variants'
 import { twMerge } from 'tailwind-merge'
-import { TButtonRoot } from '../type'
+import { TButtonRoot } from '../types'
 
 export const ButtonRootStyle = tv({
-  base: 'flex size-fit rounded-sm border-2  transition-all duration-300',
+  base: 'flex size-fit justify-center rounded-sm border-2 transition-all duration-300',
   variants: {
     style: {
       primary:
@@ -55,11 +55,11 @@ export const ButtonRoot: FC<TButtonRoot> = ({
 }) => {
   return (
     <button
+      {...rest}
       className={twMerge(
         ButtonRootStyle({ size, style, fontCase, fontWeight }),
         rest.className,
       )}
-      {...rest}
     >
       {children}
     </button>

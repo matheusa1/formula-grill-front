@@ -1,4 +1,9 @@
-import { HTMLAttributes, ReactNode } from 'react'
+import {
+  HTMLAttributes,
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  ReactNode,
+} from 'react'
 import { VariantProps } from 'tailwind-variants'
 import type { InputMainStyle } from './parts/InputMain'
 
@@ -8,9 +13,16 @@ export type TInputRoot = {
 
 export type TInputLabel = {
   children: string
-} & HTMLAttributes<HTMLLabelElement>
+} & LabelHTMLAttributes<HTMLLabelElement>
 
-export type TInputMain = {} & HTMLAttributes<HTMLInputElement> &
+export type TInputMain = {
+  type?: string
+} & InputHTMLAttributes<HTMLInputElement> &
   VariantProps<typeof InputMainStyle>
+
+export type TInputFeedback = {
+  children?: string
+  type?: 'error' | 'warn'
+}
 
 export type TInputStorybook = {} & TInputMain & TInputLabel

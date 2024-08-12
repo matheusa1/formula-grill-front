@@ -8,10 +8,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        carbon: 'url("/carbon.png")',
+      },
       dropShadow: {
         yellow: '0 4px 14px rgba(249, 235, 82, 0.5)',
       },
       colors: {
+        danger: '#DC3545',
+        black: '#101010',
         mercedes: {
           blue: {
             100: '#cdf6f5',
