@@ -1,21 +1,21 @@
 'use client'
 
 import { Button } from '@/components/atoms/Button'
+import { Form } from '@/components/atoms/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { ISignInScheme, SignInScheme } from './types'
-import { Form } from '@/components/atoms/Form'
+import { SignUpScheme, TSignUpScheme } from './types'
 import { useRouter } from 'next/navigation'
 
-export const LoginForm: FC = () => {
+export const SignUpForm: FC = () => {
   const router = useRouter()
 
-  const formMethods = useForm<ISignInScheme>({
-    resolver: zodResolver(SignInScheme),
+  const formMethods = useForm<TSignUpScheme>({
+    resolver: zodResolver(SignUpScheme),
   })
 
-  const onHandleSubmit = (data: ISignInScheme) => {
+  const onHandleSubmit = (data: TSignUpScheme) => {
     console.log(data)
   }
 
@@ -30,6 +30,18 @@ export const LoginForm: FC = () => {
         onSubmit={formMethods.handleSubmit(onHandleSubmit)}
       >
         <div className="flex flex-col gap-4">
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="name"
+              className="text-center xl:text-left"
+            >
+              Nome
+            </Form.Input.Label>
+            <Form.Input.Main id="name" style="primaryBlue" name="name" />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.name?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
           <Form.Input.Root>
             <Form.Input.Label
               htmlFor="email"
@@ -64,21 +76,41 @@ export const LoginForm: FC = () => {
               {formMethods.formState.errors.password?.message}
             </Form.Input.Feedback>
           </Form.Input.Root>
-          <a
-            className="text-sm text-mercedes-blue-500 underline xl:text-left
+          <Form.Input.Root>
+            <Form.Input.Label
+              htmlFor="confirmPassword"
+              className="text-center xl:text-left"
+            >
+              Confirmar Senha
+            </Form.Input.Label>
+            <Form.Input.Main
+              id="confirmPassword"
+              style="primaryBlue"
+              password
+              name="confirmPassword"
+            />
+            <Form.Input.Feedback type="error">
+              {formMethods.formState.errors.confirmPassword?.message}
+            </Form.Input.Feedback>
+          </Form.Input.Root>
+          <p className="text-sm xl:text-left">
+            Já possui uma conta?{' '}
+            <a
+              className=" text-mercedes-blue-500 underline 
             "
-            href="/sign-up"
-          >
-            Cadastre-se
-          </a>
+              href="/login"
+            >
+              Entrar
+            </a>
+          </p>
         </div>
 
         <footer className="flex flex-col gap-4 xl:flex-row xl:gap-20 ">
           <Button.Root
-            onClick={onHandleGoBack}
             type="button"
             style="outlineBlue"
             className="w-full"
+            onClick={onHandleGoBack}
           >
             <Button.Text>Voltar</Button.Text>
           </Button.Root>

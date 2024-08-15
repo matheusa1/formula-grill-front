@@ -7,13 +7,18 @@ import { HeaderItem } from '@/components/atoms/HeaderItem'
 import { ChevronDown } from 'lucide-react'
 import { Button } from '@/components/atoms/Button'
 import { useWindow } from '@/hooks/useWindow'
+import { useRouter } from 'next/navigation'
 
 export const HeaderItems: FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { width } = useWindow()
-
+  const router = useRouter()
   const toggleOpen = () => {
     setIsOpen(!isOpen)
+  }
+
+  const handleRedirectToLoginPage = () => {
+    router.push('/login')
   }
 
   return (
@@ -27,7 +32,11 @@ export const HeaderItems: FC = () => {
           </HeaderItem>
         ))}
         {width < 640 && (
-          <Button.Root style={'outline'} size="sm">
+          <Button.Root
+            style={'outline'}
+            size="sm"
+            onClick={handleRedirectToLoginPage}
+          >
             <Button.Text>Entrar</Button.Text>
           </Button.Root>
         )}
