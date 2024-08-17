@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { ButtonRoot } from './parts/ButtonRoot'
 import { ButtonText } from './parts/ButtonText'
-import { TStorybookButton } from './type'
+import { TStorybookButton } from './types'
 
 export const Button = {
   Root: ButtonRoot,

@@ -3,20 +3,44 @@
 import { Button } from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { SignUpScheme, TSignUpScheme } from './types'
 import { useRouter } from 'next/navigation'
+import { createUser } from '@/services/api'
+import { toast } from 'react-toastify'
 
 export const SignUpForm: FC = () => {
   const router = useRouter()
-
+  const [isLoading, setIsLoading] = useState(false)
   const formMethods = useForm<TSignUpScheme>({
     resolver: zodResolver(SignUpScheme),
   })
 
-  const onHandleSubmit = (data: TSignUpScheme) => {
-    console.log(data)
+  const onHandleSubmit = async (data: TSignUpScheme) => {
+    setIsLoading(true)
+
+    try {
+      await createUser(data)
+
+      toast.success('Usuário cadastrado com sucesso!')
+
+      setIsLoading(false)
+
+      router.push('/login')
+      // eslint-disable-next-line
+    } catch (error: any) {
+      if (error?.response?.status === 409) {
+        formMethods.setError('email', {
+          type: 'manual',
+          message: 'Email já cadastrado',
+        })
+
+        setIsLoading(false)
+
+        return
+      }
+    }
   }
 
   const onHandleGoBack = () => {
@@ -107,14 +131,20 @@ export const SignUpForm: FC = () => {
 
         <footer className="flex flex-col gap-4 xl:flex-row xl:gap-20 ">
           <Button.Root
+            isLoading={isLoading}
             type="button"
             style="outlineBlue"
             className="w-full"
-            onClick={onHandleGoBack}
+            onClick={!isLoading ? onHandleGoBack : () => {}}
           >
             <Button.Text>Voltar</Button.Text>
           </Button.Root>
-          <Button.Root style="primaryBlue" type="submit" className="w-full">
+          <Button.Root
+            isLoading={isLoading}
+            style="primaryBlue"
+            type={!isLoading ? 'submit' : 'button'}
+            className="w-full"
+          >
             <Button.Text>Entrar</Button.Text>
           </Button.Root>
         </footer>

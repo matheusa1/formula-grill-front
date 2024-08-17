@@ -4,6 +4,7 @@ import type { ButtonRootStyle } from './parts/ButtonRoot'
 
 export type TButtonRoot = {
   children: ReactNode
+  isLoading?: boolean
 } & ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof ButtonRootStyle>
 

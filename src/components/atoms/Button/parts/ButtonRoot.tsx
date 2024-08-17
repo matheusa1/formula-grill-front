@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { tv } from 'tailwind-variants'
 import { twMerge } from 'tailwind-merge'
 import { TButtonRoot } from '../types'
+import ReactLoading from 'react-loading'
 
 export const ButtonRootStyle = tv({
   base: 'flex size-fit justify-center rounded-sm border-2 transition-all duration-300',
@@ -13,7 +14,7 @@ export const ButtonRootStyle = tv({
       outline:
         'border-ferrari-yellow-500 bg-transparent text-ferrari-yellow-500 hover:bg-ferrari-yellow-500 hover:text-black',
       primaryBlue:
-        'border-mercedes-blue-500 bg-mercedes-blue-500 text-black hover:border-mercedes-blue-300 hover:bg-mercedes-blue-300 hover:drop-shadow-yellow',
+        'border-mercedes-blue-500 bg-mercedes-blue-500 text-black hover:border-mercedes-blue-300 hover:bg-mercedes-blue-300 hover:drop-shadow-blue',
       outlineBlue:
         'border-mercedes-blue-500 bg-transparent text-mercedes-blue-500 hover:bg-mercedes-blue-500 hover:text-white',
     },
@@ -51,6 +52,7 @@ export const ButtonRoot: FC<TButtonRoot> = ({
   style,
   fontCase,
   fontWeight,
+  isLoading,
   ...rest
 }) => {
   return (
@@ -61,7 +63,26 @@ export const ButtonRoot: FC<TButtonRoot> = ({
         rest.className,
       )}
     >
-      {children}
+      {isLoading ? (
+        <ReactLoading
+          type={'spin'}
+          width={24}
+          height={24}
+          color={
+            style === 'primary'
+              ? 'black'
+              : style === 'primaryBlue'
+                ? 'black'
+                : style === 'outline'
+                  ? '#f9eb52'
+                  : style === 'outlineBlue'
+                    ? '#04d1ce'
+                    : 'black'
+          }
+        />
+      ) : (
+        children
+      )}
     </button>
   )
 }

@@ -10,4 +10,4 @@ export const SignInScheme = z.object({
   password: z.string().nonempty(messages.nonempty),
 })
 
-export type ISignInScheme = z.infer<typeof SignInScheme>
+export type TSignInScheme = z.infer<typeof SignInScheme>

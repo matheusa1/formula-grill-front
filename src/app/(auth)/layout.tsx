@@ -8,7 +8,7 @@ const AuthLayout: FC<{
   return (
     <main
       className={
-        'grid h-screen w-screen grid-cols-1 place-items-center bg-black bg-carbon p-5 text-white brightness-150 md:p-20 xl:grid-cols-2 xl:gap-20'
+        'grid min-h-screen w-screen grid-cols-1 place-items-center bg-black bg-carbon p-5 text-white brightness-150 md:px-20 xl:grid-cols-2 xl:gap-20'
       }
     >
       {children}

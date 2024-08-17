@@ -4,7 +4,7 @@ import { AlertCircle, AlertTriangle } from 'lucide-react'
 
 export const InputFeedback: React.FC<TInputFeedback> = ({ children, type }) => {
   return (
-    <div className={'text-danger flex items-center gap-1 text-xs'}>
+    <div className={'flex items-center gap-1 text-xs text-danger'}>
       {children && (
         <>
           {type === 'error' ? <AlertCircle /> : <AlertTriangle />}
