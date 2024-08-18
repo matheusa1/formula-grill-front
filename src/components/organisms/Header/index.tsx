@@ -8,12 +8,19 @@ import { Button } from '@/components/atoms/Button'
 import { HeaderItems } from '@/components/molecules/HeaderItems'
 import { useWindow } from '@/hooks/useWindow'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
 
 export const Header: FC = () => {
   const { width } = useWindow()
   const router = useRouter()
+  const { user } = useAuth()
+
   const handleRedirectToLoginPage = () => {
     router.push('/login')
+  }
+
+  const handleRedirectToProfilePage = () => {
+    router.push('/profile')
   }
 
   return (
@@ -27,9 +34,11 @@ export const Header: FC = () => {
           <Button.Root
             style={'outline'}
             size="sm"
-            onClick={handleRedirectToLoginPage}
+            onClick={
+              !user ? handleRedirectToLoginPage : handleRedirectToProfilePage
+            }
           >
-            <Button.Text>Entrar</Button.Text>
+            <Button.Text>{user ? 'Perfil' : 'Entrar'}</Button.Text>
           </Button.Root>
         )}
 

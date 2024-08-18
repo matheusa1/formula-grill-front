@@ -7,11 +7,12 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { TSignInScheme, SignInScheme } from './types'
 import { Form } from '@/components/atoms/Form'
 import { useRouter } from 'next/navigation'
-import { login } from '@/services/api'
+import { useAuth } from '@/context/AuthContext'
 
 export const LoginForm: FC = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
+  const { signIn } = useAuth()
 
   const formMethods = useForm<TSignInScheme>({
     resolver: zodResolver(SignInScheme),
@@ -20,28 +21,26 @@ export const LoginForm: FC = () => {
   const onHandleSubmit = async (data: TSignInScheme) => {
     setIsLoading(true)
 
-    try {
-      const response = await login(data)
+    const response = await signIn(data)
 
-      console.log(response)
+    if (response.error) {
+      formMethods.setError('email', {
+        type: 'manual',
+        message: response.data.message,
+      })
 
+      formMethods.setError('password', {
+        type: 'manual',
+        message: response.data.message,
+      })
       setIsLoading(false)
-      // eslint-disable-next-line
-    } catch (error: any) {
-      if (error?.response?.data?.statusCode === 401) {
-        formMethods.setError('email', {
-          type: 'manual',
-          message: 'Usuário ou senha inválidos',
-        })
 
-        formMethods.setError('password', {
-          type: 'manual',
-          message: 'Usuário ou senha inválidos',
-        })
-
-        setIsLoading(false)
-      }
+      return
     }
+
+    setIsLoading(false)
+
+    router.push('/')
   }
 
   const onHandleGoBack = () => {
@@ -58,7 +57,7 @@ export const LoginForm: FC = () => {
           <Form.Input.Root>
             <Form.Input.Label
               htmlFor="email"
-              className="text-center xl:text-left"
+              className=" text-center xl:text-left"
             >
               Email
             </Form.Input.Label>

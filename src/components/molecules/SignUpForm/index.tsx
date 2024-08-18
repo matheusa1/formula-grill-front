@@ -57,7 +57,7 @@ export const SignUpForm: FC = () => {
           <Form.Input.Root>
             <Form.Input.Label
               htmlFor="name"
-              className="text-center xl:text-left"
+              className=" text-center xl:text-left"
             >
               Nome
             </Form.Input.Label>
