@@ -145,7 +145,7 @@ export const SignUpForm: FC = () => {
             type={!isLoading ? 'submit' : 'button'}
             className="w-full"
           >
-            <Button.Text>Entrar</Button.Text>
+            <Button.Text>Cadastrar</Button.Text>
           </Button.Root>
         </footer>
       </form>
