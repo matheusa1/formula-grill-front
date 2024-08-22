@@ -11,9 +11,9 @@ const HomeLayout: FC<{
   children: React.ReactNode
 }> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="bg-blue-500 flex-1">{children}</main>
+      <main className="flex-1 bg-blue-500">{children}</main>
       <footer className="bg-yellow-500">footer</footer>
     </div>
   )

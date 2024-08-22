@@ -1,17 +1,12 @@
-import { ButtonHTMLAttributes, FC, ReactNode } from 'react'
-import { ButtonRoot, ButtonRootStyle } from './parts/ButtonRoot'
+import { FC } from 'react'
+import { ButtonRoot } from './parts/ButtonRoot'
 import { ButtonText } from './parts/ButtonText'
-import { VariantProps } from 'tailwind-variants'
+import { TStorybookButton } from './types'
 
 export const Button = {
   Root: ButtonRoot,
   Text: ButtonText,
 }
-
-type TStorybookButton = {
-  children: string
-} & ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof ButtonRootStyle>
 
 export const StorybookButton: FC<TStorybookButton> = ({
   children,
