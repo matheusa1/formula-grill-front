@@ -1,7 +1,7 @@
 export const routes = [
   {
     name: 'Inicio',
-    path: '#home',
+    path: '/',
   },
   {
     name: 'Sobre',

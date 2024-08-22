@@ -44,8 +44,6 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
         name: decoded.name,
         email: decoded.email,
       })
-
-      console.log({ decoded })
     },
     [signOut],
   )
