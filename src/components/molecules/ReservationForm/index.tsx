@@ -10,7 +10,6 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
-import InputMask from 'react-input-mask'
 
 const hours = [
   { value: 0, label: '08:00' },
@@ -35,6 +34,23 @@ const ReservationForm: FC = () => {
     console.log(typedData)
   }
 
+  const formatPhone = (value: string) => {
+    if (!value) return value
+    const phoneNumber = value.replace(/[^\d]/g, '')
+    const phoneNumberLength = phoneNumber.length
+
+    if (phoneNumberLength < 3) return phoneNumber
+    if (phoneNumberLength <= 7) {
+      return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2)}`
+    }
+    return `(${phoneNumber.slice(0, 2)}) ${phoneNumber.slice(2, 7)}-${phoneNumber.slice(7, 11)}`
+  }
+
+  const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedPhone = formatPhone(event.target.value)
+    formMethods.setValue('phone', formattedPhone)
+  }
+
   return (
     <FormProvider {...formMethods}>
       <form
@@ -51,15 +67,13 @@ const ReservationForm: FC = () => {
 
         <Form.Input.Root>
           <Form.Input.Label>Telefone</Form.Input.Label>
-          <InputMask
-            mask="(99) 99999-9999"
-            value={formMethods.watch('phone')}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              formMethods.setValue('phone', e.target.value)
-            }
-          >
-            <Form.Input.Main name={'phone'} type={'tel'} />
-          </InputMask>
+
+          <Form.Input.Main
+            onChange={(e) => handlePhoneChange(e)}
+            name={'phone'}
+            type={'tel'}
+          />
+
           <Form.Input.Feedback>
             {formMethods.formState.errors.phone?.message}
           </Form.Input.Feedback>

@@ -1,12 +1,18 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import Selecta from 'react-select'
 import { TSelectMain } from '../types'
 import { twMerge } from 'tailwind-merge'
 
 export const SelectMain: FC<TSelectMain> = ({ ...rest }) => {
-  return (
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  return isMounted ? (
     <Selecta
       {...rest}
       styles={{
@@ -53,5 +59,5 @@ export const SelectMain: FC<TSelectMain> = ({ ...rest }) => {
       }}
       className={twMerge('rounded-md', rest.className)}
     />
-  )
+  ) : null
 }
