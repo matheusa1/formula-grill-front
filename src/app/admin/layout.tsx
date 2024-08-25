@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
   return (
     <SidebarContextProvider>
-      <div className="flex flex-row">
+      <div className="flex flex-row bg-black">
         <aside className="m-0 h-screen w-fit p-0">
           <AdminOverlay />
           <AdminSidebar />

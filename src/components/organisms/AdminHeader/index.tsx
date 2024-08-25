@@ -10,11 +10,12 @@ import React, { ReactElement } from 'react'
 const AdminHeader: React.FC = (): ReactElement => {
   const { toggleSidebar, isSidebarOpen } = useSidebar()
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
 
   const userName = user?.name
 
   const onHandleSignOut = () => {
+    signOut()
     router.push('/')
   }
 
