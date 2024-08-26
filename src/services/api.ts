@@ -1,7 +1,12 @@
 import { TSignInScheme } from '@/components/molecules/LoginForm/types'
 import { TSignUpScheme } from './../components/molecules/SignUpForm/types'
 import axios from 'axios'
-import { TCreateTableResponse, TTableCreate, TTables } from '@/types/tableType'
+import {
+  TCreateTableResponse,
+  TTable,
+  TTableCreate,
+  TTables,
+} from '@/types/tableType'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -47,6 +52,26 @@ export const createTable = async ({
       Authorization: `Bearer ${token}`,
     },
   })
+
+  return response.data
+}
+
+export const updateTable = async ({
+  data,
+  token,
+}: {
+  data: TTable
+  token: string
+}) => {
+  const response = await api.patch<TTable>(
+    `/mesas/${data.id}`,
+    { ...data, id: undefined },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 
   return response.data
 }

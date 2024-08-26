@@ -19,7 +19,7 @@ const HeaderTables: FC<THeaderTables> = ({ search, setSearch }) => {
           style="primaryBlueDarkText"
         />
       </Input.Root>
-      <h1 className="hidden md:flex md:place-self-center">HeaderTables</h1>
+      <h1 className="hidden md:flex md:place-self-center">Mesas</h1>
       <Dialog.Root open={isOpen}>
         <Button.Root
           className="w-full md:w-fit md:place-self-end"
