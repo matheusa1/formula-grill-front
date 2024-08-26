@@ -2,16 +2,19 @@
 
 import BodyTables from '@/components/organisms/BodyTables'
 import HeaderTables from '@/components/organisms/HeaderTables'
+import { useAuth } from '@/context/AuthContext'
 import { getTables } from '@/services/api'
 import { FC, useState } from 'react'
 import { useQuery } from 'react-query'
 
 const Tables: FC = () => {
   const [search, setSearch] = useState('')
+  const { token } = useAuth()
 
-  const { data: tables, isLoading } = useQuery(['tables'], {
+  const { data: tables, isLoading } = useQuery({
+    queryKey: ['tables'],
     queryFn: async () => {
-      const res = await getTables()
+      const res = await getTables(token!)
 
       return res
     },

@@ -23,6 +23,6 @@ export type TInputMain = {
 export type TInputFeedback = {
   children?: string
   type?: 'error' | 'warn'
-}
+} & HTMLAttributes<HTMLSpanElement>
 
 export type TInputStorybook = {} & TInputMain & TInputLabel
