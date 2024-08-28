@@ -20,7 +20,7 @@ export default function middleware(request: NextRequest) {
 
   // const payload: TJWTDecode = jwtDecode(token)
 
-  // if (request.nextUrl.pathname.includes('/admin') && payload.type !== 'admin') {
+  // if (request.nextUrl.pathname.includes('/admin')) {
   //   return NextResponse.redirect(homeUrl)
   // }
 
@@ -30,5 +30,5 @@ export default function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/profile'],
+  matcher: ['/profile', '/admin/:path*', '/login', '/sign-up'],
 }

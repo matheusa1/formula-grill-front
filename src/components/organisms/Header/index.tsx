@@ -15,12 +15,18 @@ export const Header: FC = () => {
   const router = useRouter()
   const { user } = useAuth()
 
+  const isAdmin = true
+
   const handleRedirectToLoginPage = () => {
     router.push('/login')
   }
 
   const handleRedirectToProfilePage = () => {
     router.push('/profile')
+  }
+
+  const handleRedirectToAdminPage = () => {
+    router.push('/admin/tables')
   }
 
   return (
@@ -35,10 +41,16 @@ export const Header: FC = () => {
             style={'outline'}
             size="sm"
             onClick={
-              !user ? handleRedirectToLoginPage : handleRedirectToProfilePage
+              !user
+                ? handleRedirectToLoginPage
+                : isAdmin
+                  ? handleRedirectToAdminPage
+                  : handleRedirectToProfilePage
             }
           >
-            <Button.Text>{user ? 'Perfil' : 'Entrar'}</Button.Text>
+            <Button.Text>
+              {user ? (isAdmin ? 'Admin' : 'Perfil') : 'Entrar'}
+            </Button.Text>
           </Button.Root>
         )}
 
