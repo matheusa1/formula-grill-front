@@ -7,13 +7,15 @@ import LogoNoText from '@/assets/svg/logoNoText.svg'
 import { Button } from '@/components/atoms/Button'
 import { HeaderItems } from '@/components/molecules/HeaderItems'
 import { useWindow } from '@/hooks/useWindow'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/context/AuthContext'
+import { onHandleScrollToReservation } from '@/utils/onHandleScrollToReservation'
 
 export const Header: FC = () => {
   const { width } = useWindow()
   const router = useRouter()
   const { user } = useAuth()
+  const pathName = usePathname()
 
   const isAdmin = true
 
@@ -27,6 +29,16 @@ export const Header: FC = () => {
 
   const handleRedirectToAdminPage = () => {
     router.push('/admin/tables')
+  }
+
+  const HandleScrollToReservation = () => {
+    if (pathName != '/') {
+      router.push('/#reservation')
+
+      return
+    }
+
+    onHandleScrollToReservation()
   }
 
   return (
@@ -59,7 +71,7 @@ export const Header: FC = () => {
           alt={'Logo image'}
           className="h-10 w-1/3 min-w-fit object-contain object-left sm:w-full sm:object-center"
         />
-        <Button.Root size="sm">
+        <Button.Root size="sm" onClick={HandleScrollToReservation}>
           <Button.Text>Reservar</Button.Text>
         </Button.Root>
       </section>
