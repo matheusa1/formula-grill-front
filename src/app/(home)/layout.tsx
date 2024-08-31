@@ -13,7 +13,7 @@ const HomeLayout: FC<{
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1 bg-blue-500">{children}</main>
+      <main className="flex-1 bg-black">{children}</main>
       <footer className="bg-yellow-500">footer</footer>
     </div>
   )
