@@ -1,3 +1,4 @@
+import Footer from '@/components/organisms/Footer'
 import { Header } from '@/components/organisms/Header'
 import { Metadata } from 'next'
 import { FC } from 'react'
@@ -14,7 +15,7 @@ const HomeLayout: FC<{
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 bg-blue-500">{children}</main>
-      <footer className="bg-yellow-500">footer</footer>
+      <Footer />
     </div>
   )
 }
