@@ -14,10 +14,8 @@ import { onHandleScrollToReservation } from '@/utils/onHandleScrollToReservation
 export const Header: FC = () => {
   const { width } = useWindow()
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const pathName = usePathname()
-
-  const isAdmin = true
 
   const handleRedirectToLoginPage = () => {
     router.push('/login')

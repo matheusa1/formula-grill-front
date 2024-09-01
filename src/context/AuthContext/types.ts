@@ -7,4 +7,5 @@ export type contextType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   signIn: (data: TSignInScheme) => Promise<{ error: boolean; data: any }>
   signOut: () => void
+  isAdmin: boolean
 }

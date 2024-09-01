@@ -6,28 +6,28 @@ import { FC } from 'react'
 import AboutImage1 from '@/assets/images/AboutIamge1.jpg'
 import AboutImage2 from '@/assets/images/sign_image.png'
 
-const About: FC = () => {
-  const aboutCards = [
-    {
-      title: 'Onde estamos',
-      info: 'Av. Irmãos Pereira, 910',
-      subInfo: 'Campo Mourão - PR',
-      Icon: MapPin,
-    },
-    {
-      title: 'Funcionamento',
-      info: 'Terça a domingo',
-      subInfo: '18h00 às 01h00',
-      Icon: Clock,
-    },
-    {
-      title: 'Informações',
-      info: 'info@formulagrill.com',
-      subInfo: '(44) 3434-4343',
-      Icon: BookOpenText,
-    },
-  ]
+export const aboutCardsData = [
+  {
+    title: 'Onde estamos',
+    info: 'Av. Irmãos Pereira, 910',
+    subInfo: 'Campo Mourão - PR',
+    Icon: MapPin,
+  },
+  {
+    title: 'Funcionamento',
+    info: 'Terça a domingo',
+    subInfo: '18h00 às 01h00',
+    Icon: Clock,
+  },
+  {
+    title: 'Informações',
+    info: 'info@formulagrill.com',
+    subInfo: '(44) 3434-4343',
+    Icon: BookOpenText,
+  },
+]
 
+const About: FC = () => {
   return (
     <section
       id="about"
@@ -36,7 +36,7 @@ const About: FC = () => {
       }
     >
       <div className="grid w-full grid-cols-1 place-items-center gap-5 lg:flex lg:justify-evenly">
-        {aboutCards.map((card, index) => (
+        {aboutCardsData.map((card, index) => (
           <AboutCards key={index} {...card} />
         ))}
       </div>
