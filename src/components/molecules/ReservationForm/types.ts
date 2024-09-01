@@ -21,7 +21,7 @@ export const reservationSchema = z
       .refine((value) => new Date() < value, {
         message: 'A data deve ser maior que a data atual',
       })
-      .refine((value) => value.getFullYear() === new Date().getFullYear(), {
+      .refine((value) => value.getFullYear() >= new Date().getFullYear(), {
         message: 'A data deve ser no ano atual',
       }),
     startHour: z
@@ -46,6 +46,18 @@ export const reservationSchema = z
   .refine((data) => data.endHour >= data.startHour, {
     message: 'A hora de término deve ser maior que a hora de início',
     path: ['endHour'],
+  })
+  .transform((data) => {
+    const { startHour, endHour, date, ...rest } = data
+
+    const startHourDate = new Date(date).setHours(startHour, 0, 0, 0)
+    const endHourDate = new Date(date).setHours(endHour, 0, 0, 0)
+    return {
+      ...rest,
+      date,
+      startHour: new Date(startHourDate).toISOString(),
+      endHour: new Date(endHourDate).toISOString(),
+    }
   })
 
 export type TReservationSchema = z.infer<typeof reservationSchema>
