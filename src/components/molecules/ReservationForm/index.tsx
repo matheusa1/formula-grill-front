@@ -10,6 +10,11 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/atoms/Button'
 import { Form } from '@/components/atoms/Form'
+import { useMutation } from 'react-query'
+import { createReservation } from '@/services/api'
+import { useAuth } from '@/context/AuthContext'
+import { TAxiosErrorApi } from '@/types/error'
+import { useRouter } from 'next/navigation'
 
 const hours = [
   { value: 0, label: '08:00' },
@@ -26,12 +31,39 @@ const ReservationForm: FC = () => {
   const formMethods = useForm<TReservationSchemaInput>({
     resolver: zodResolver(reservationSchema),
   })
+  const { token } = useAuth()
+  const router = useRouter()
 
   formMethods.watch('startHour')
 
+  const { mutateAsync: createReservationFn, isLoading } = useMutation({
+    mutationFn: createReservation,
+    onSuccess: () => {
+      router.push('/payment')
+    },
+    onError: (err) => {
+      const typedErr = err as TAxiosErrorApi
+
+      if (typedErr.response?.data.statusCode === 409) {
+        formMethods.setError('startHour', {
+          type: 'manual',
+          message: 'Já existe uma reserva nesse horário',
+        })
+
+        formMethods.setError('endHour', {
+          type: 'manual',
+          message: 'Já existe uma reserva nesse horário',
+        })
+      }
+
+      console.log(err)
+    },
+  })
+
   const onHandleClick = (data: unknown) => {
+    if (isLoading || !token) return
     const typedData = data as TReservationSchemaOutput
-    console.log(typedData)
+    createReservationFn({ data: typedData, token: token! })
   }
 
   const formatPhone = (value: string) => {
@@ -117,7 +149,10 @@ const ReservationForm: FC = () => {
             {formMethods.formState.errors.endHour?.message}
           </Form.Input.Feedback>
         </Form.Input.Root>
-        <Button.Root className="w-full md:col-span-2 md:mx-auto md:w-fit">
+        <Button.Root
+          isLoading={isLoading}
+          className="w-full md:col-span-2 md:mx-auto md:w-fit"
+        >
           <Button.Text>Reservar</Button.Text>
         </Button.Root>
       </form>

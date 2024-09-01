@@ -1,3 +1,4 @@
+import { TReservationSchemaOutput } from './../components/molecules/ReservationForm/types'
 import { TSignInScheme } from '@/components/molecules/LoginForm/types'
 import { TSignUpScheme } from './../components/molecules/SignUpForm/types'
 import axios from 'axios'
@@ -7,6 +8,7 @@ import {
   TTableCreate,
   TTables,
 } from '@/types/tableType'
+import { TReservationsResponse } from '@/types/reservationsType'
 import { TUserType } from '@/types/userType'
 
 const api = axios.create({
@@ -77,6 +79,32 @@ export const updateTable = async ({
   const response = await api.patch<TTable>(
     `/mesas/${data.id}`,
     { ...data, id: undefined },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const createReservation = async ({
+  data,
+  token,
+}: {
+  data: TReservationSchemaOutput
+  token: string
+}) => {
+  const response = await api.post<TReservationsResponse>(
+    '/reservas',
+    {
+      dateStart: data.startHour,
+      dateEnd: data.endHour,
+      phone: data.phone,
+      seatCount: data.quantity,
+      name: data.name,
+    },
     {
       headers: {
         Authorization: `Bearer ${token}`,
