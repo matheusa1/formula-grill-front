@@ -7,10 +7,21 @@ import {
   TTableCreate,
   TTables,
 } from '@/types/tableType'
+import { TUserType } from '@/types/userType'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
+
+export const getUserData = async (token: string) => {
+  const response = await api.get<TUserType>('/user/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
 
 export const createUser = async (data: TSignUpScheme) => {
   const response = await api.post('/user', {
