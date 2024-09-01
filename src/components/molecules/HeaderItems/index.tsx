@@ -13,10 +13,8 @@ import { useAuth } from '@/context/AuthContext'
 export const HeaderItems: FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { width } = useWindow()
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const router = useRouter()
-
-  const isAdmin = true
 
   const toggleOpen = () => {
     setIsOpen(!isOpen)
