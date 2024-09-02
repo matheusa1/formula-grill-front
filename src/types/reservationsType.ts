@@ -10,3 +10,8 @@ export type TReservationsResponse = {
   mesaId: number
   userID: number
 }
+
+export type TCancelReservationResponse = {
+  status: string
+  message: string
+}

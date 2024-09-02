@@ -8,7 +8,10 @@ import {
   TTableCreate,
   TTables,
 } from '@/types/tableType'
-import { TReservationsResponse } from '@/types/reservationsType'
+import {
+  TCancelReservationResponse,
+  TReservationsResponse,
+} from '@/types/reservationsType'
 import { TUserType } from '@/types/userType'
 
 const api = axios.create({
@@ -105,6 +108,35 @@ export const createReservation = async ({
       seatCount: data.quantity,
       name: data.name,
     },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const getMyReservations = async (token: string) => {
+  const response = await api.get<TReservationsResponse[]>('/reservas/user/me', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const cancelReservation = async ({
+  id,
+  token,
+}: {
+  id: number
+  token: string
+}) => {
+  const response = await api.delete<TCancelReservationResponse>(
+    `/reservas/${id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
