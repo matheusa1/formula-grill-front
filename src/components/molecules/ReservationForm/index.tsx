@@ -62,7 +62,9 @@ const ReservationForm: FC = () => {
 
   const onHandleClick = (data: unknown) => {
     if (isLoading || !token) return
+
     const typedData = data as TReservationSchemaOutput
+    console.log(typedData)
     createReservationFn({ data: typedData, token: token! })
   }
 

@@ -17,7 +17,14 @@ export const reservationSchema = z
       }),
     date: z
       .string({ message: 'A data é obrigatória' })
-      .transform((value) => new Date(value))
+      .transform((value) => {
+        const date = new Date(value)
+        const timezone = date.getTimezoneOffset()
+
+        const correctTimezone = date.setMinutes(date.getMinutes() + timezone)
+
+        return new Date(correctTimezone)
+      })
       .refine((value) => new Date() < value, {
         message: 'A data deve ser maior que a data atual',
       })
