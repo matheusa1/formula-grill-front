@@ -1,4 +1,4 @@
-import { HandPlatter } from 'lucide-react'
+import { ChefHat, HandPlatter } from 'lucide-react'
 
 const iconSize = 24
 
@@ -8,6 +8,16 @@ export const Paths = [
     name: 'Mesas',
     icon: (active?: boolean) => (
       <HandPlatter
+        size={iconSize}
+        className={active ? 'text-mercedes-blue-500' : 'text-white'}
+      />
+    ),
+  },
+  {
+    path: '/admin/chefs',
+    name: 'Chefs',
+    icon: (active?: boolean) => (
+      <ChefHat
         size={iconSize}
         className={active ? 'text-mercedes-blue-500' : 'text-white'}
       />
