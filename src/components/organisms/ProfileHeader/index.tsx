@@ -19,7 +19,7 @@ const ProfileHeader: FC = () => {
   }
 
   return (
-    <div className={'grid grid-cols-3'}>
+    <div className={'grid grid-cols-3 text-xl font-bold'}>
       <h1 className="my-auto place-self-start">Perfil</h1>
       <h1 className="place-self-center">{user?.name}</h1>
       <Button.Root

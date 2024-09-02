@@ -13,6 +13,8 @@ import {
   TReservationsResponse,
 } from '@/types/reservationsType'
 import { TUserType } from '@/types/userType'
+import { TCreateChefOutput } from '@/components/molecules/CreateChefForm/types'
+import { TChefResponse, TUpdateChef } from '@/types/chefType'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -108,6 +110,48 @@ export const createReservation = async ({
       seatCount: data.quantity,
       name: data.name,
     },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const createChef = async ({
+  data,
+  token,
+}: {
+  data: TCreateChefOutput
+  token: string
+}) => {
+  const response = await api.post<TChefResponse>('/chefs', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const getChefs = async () => {
+  const response = await api.get<TChefResponse[]>('/chefs')
+
+  return response.data
+}
+
+export const updateChef = async ({
+  data,
+  token,
+}: {
+  data: TUpdateChef
+  token: string
+}) => {
+  const response = await api.patch<TChefResponse>(
+    `/chefs/${data.id}`,
+    { ...data, id: undefined },
     {
       headers: {
         Authorization: `Bearer ${token}`,
