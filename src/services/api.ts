@@ -190,3 +190,13 @@ export const cancelReservation = async ({
 
   return response.data
 }
+
+export const getAllReservations = async (token: string) => {
+  const response = await api.get<TReservationsResponse[]>('/reservas', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
