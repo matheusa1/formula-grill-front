@@ -33,11 +33,11 @@ const ReservationsAdminCards: FC<TReservationsAdminCards> = ({
     mutationKey: 'cancelReservation',
     mutationFn: cancelReservation,
     onSuccess: () => {
-      const cachedData = queryClient.getQueryData('reservationsProfile')
+      const cachedData = queryClient.getQueryData('reservationsAdmin')
 
       if (cachedData) {
         queryClient.setQueryData(
-          'reservationsProfile',
+          'reservationsAdmin',
           (cachedData as []).filter(
             (res: TReservationsResponse) => res.id !== reservation.id,
           ),
