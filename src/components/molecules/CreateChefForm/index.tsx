@@ -11,19 +11,99 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '@/components/atoms/Form'
 import { Button } from '@/components/atoms/Button'
+import { createChef, updateChef } from '@/services/api'
+import { toast } from 'react-toastify'
+import { TAxiosErrorApi } from '@/types/error'
+import { useMutation, useQueryClient } from 'react-query'
+import { TChefResponse } from '@/types/chefType'
 
-const CreateChefForm: FC<TCreateChefForm> = ({ closeModal }) => {
+const CreateChefForm: FC<TCreateChefForm> = ({ closeModal, data }) => {
   const { token } = useAuth()
+  const queryClient = useQueryClient()
+  const isUpdate = !!data
 
   const formMethods = useForm<TCreateChefInput>({
     resolver: zodResolver(createChefSchama),
+    defaultValues: {
+      name: data?.name || '',
+      bio: data?.bio || '',
+      role: data?.role || '',
+      image: data?.image || '',
+      yearsOfExperience: data?.yearsOfExperience.toString() || '',
+    },
   })
 
-  const onHandleCreate = async (data: unknown) => {
-    const typedData = data as TCreateChefOutput
+  const { mutateAsync: createChefFn } = useMutation({
+    mutationFn: isUpdate ? updateChef : createChef,
+    onSuccess: (data, variables) => {
+      const cacheData = queryClient.getQueryData('chefs')
 
-    console.log({ typedData, token })
-    // await createTableFn({ data: typedData, token: token! })
+      if (!isUpdate) {
+        queryClient.setQueryData(['chefs'], () => {
+          return [
+            ...(cacheData as []),
+            {
+              id: data.id,
+              bio: variables.data.bio,
+              image: variables.data.image,
+              name: variables.data.name,
+              role: variables.data.role,
+              yearsOfExperience: variables.data.yearsOfExperience,
+            },
+          ]
+        })
+      } else {
+        queryClient.setQueryData(['chefs'], () => {
+          return (cacheData as []).map((chef: TChefResponse) => {
+            if (chef.id === data.id) {
+              return {
+                id: data.id,
+                bio: variables.data.bio,
+                image: variables.data.image,
+                name: variables.data.name,
+                role: variables.data.role,
+                yearsOfExperience: variables.data.yearsOfExperience,
+              }
+            }
+
+            return chef
+          })
+        })
+      }
+
+      console.log({ data })
+      console.log({ cacheData })
+
+      toast.success(
+        isUpdate ? 'Chef atualizado com sucesso' : 'Chef criado com sucesso',
+      )
+
+      formMethods.reset()
+      closeModal()
+    },
+    onError: (err) => {
+      const typedErr = err as TAxiosErrorApi
+
+      if (typedErr.response?.data.statusCode === 409) {
+        formMethods.setError('name', {
+          type: 'manual',
+          message: 'Chef já cadastrado',
+        })
+      }
+      toast.error(isUpdate ? 'Erro ao atualizar o chef' : 'Erro ao criar Chef')
+    },
+  })
+
+  const onHandleCreate = async (formData: unknown) => {
+    const typedData = formData as TCreateChefOutput
+    await createChefFn({
+      data: {
+        ...typedData,
+        // @ts-expect-error Erro esperado
+        id: isUpdate ? data.id : undefined,
+      },
+      token: token!,
+    })
   }
 
   return (
@@ -61,6 +141,20 @@ const CreateChefForm: FC<TCreateChefForm> = ({ closeModal }) => {
         </Form.Input.Root>
 
         <Form.Input.Root>
+          <Form.Input.Label className="text-black">
+            Anos de experiência
+          </Form.Input.Label>
+          <Form.Input.Main
+            name="yearsOfExperience"
+            type="number"
+            style={'primaryBlueDarkText'}
+          />
+          <Form.Input.Feedback className="col-span-2">
+            {formMethods.formState.errors.yearsOfExperience?.message}
+          </Form.Input.Feedback>
+        </Form.Input.Root>
+
+        <Form.Input.Root>
           <Form.Input.Label className="text-black">Url imagem</Form.Input.Label>
           <Form.Input.Main name="image" style={'primaryBlueDarkText'} />
           <Form.Input.Feedback className="col-span-2">
@@ -83,7 +177,7 @@ const CreateChefForm: FC<TCreateChefForm> = ({ closeModal }) => {
             className="w-full md:max-w-40"
             style="primaryBlue"
           >
-            <Button.Text>Criar</Button.Text>
+            <Button.Text>{isUpdate ? 'Atualizar' : 'Criar'}</Button.Text>
           </Button.Root>
         </footer>
       </form>

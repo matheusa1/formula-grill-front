@@ -42,7 +42,7 @@ const HeaderChefs: FC<THeaderChefs> = ({ search, setSearch }) => {
           <Dialog.Description className="text-xs">
             Preencha os campos abaixo para cadastrar um novo chef
           </Dialog.Description>
-          <CreateChefForm />
+          <CreateChefForm closeModal={() => setIsOpen(false)} />
         </Dialog.Content>
       </Dialog.Root>
     </header>

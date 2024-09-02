@@ -9,7 +9,13 @@ const ChefCard: FC<TChefCard> = ({ image, name }) => {
         'flex max-w-xs flex-col items-center gap-2 font-semibold text-white transition-all hover:scale-105'
       }
     >
-      <Image src={image} alt={`${name} image`} />
+      <Image
+        src={image}
+        width={1920}
+        height={1080}
+        className="aspect-square object-cover"
+        alt={`${name} image`}
+      />
       <h1>{name}</h1>
     </div>
   )

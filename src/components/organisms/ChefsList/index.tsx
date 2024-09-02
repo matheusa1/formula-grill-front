@@ -1,9 +1,18 @@
-import { ChefsData } from '@/app/mock/chefs'
 import ChefCard from '@/components/molecules/ChefCard'
+import { getChefs } from '@/services/api'
+import { TChefResponse } from '@/types/chefType'
 import { FC } from 'react'
 
-const ChefsList: FC = () => {
-  const chefs = ChefsData
+const getChefsData = async (): Promise<TChefResponse[]> => {
+  const res = await getChefs()
+    .then((response) => response.filter((chef, index) => index <= 4))
+    .catch(() => [])
+
+  return res
+}
+
+const ChefsList: FC = async () => {
+  const chefs = await getChefsData()
 
   return (
     <div
