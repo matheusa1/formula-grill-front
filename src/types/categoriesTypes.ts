@@ -7,3 +7,10 @@ export type TCategoriesResponse = {
   updatedAt: string
   dishes: TDishesResponse[]
 }
+
+export type TCreateCAtegoriesResponse = {
+  id: number
+  name: string
+  createdAt: string
+  updatedAt: string
+}

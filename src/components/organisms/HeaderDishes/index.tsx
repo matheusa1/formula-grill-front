@@ -5,9 +5,11 @@ import { THeaderDishes } from './types'
 import * as Dialog from '@radix-ui/react-dialog'
 import { X } from 'lucide-react'
 import CreateDishesForm from '@/components/molecules/CreateDishesForm'
+import CreateCategoriesForm from '@/components/molecules/CreateCategoriesForm'
 
 const HeaderDishes: FC<THeaderDishes> = ({ search, setSearch }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isOpenCategoriasForm, setIsOpenCategoriasForm] = useState(false)
 
   return (
     <header className={'flex w-full flex-col gap-2 md:grid md:grid-cols-3'}>
@@ -20,31 +22,62 @@ const HeaderDishes: FC<THeaderDishes> = ({ search, setSearch }) => {
         />
       </Input.Root>
       <h1 className="hidden md:flex md:place-self-center">Pratos</h1>
-      <Dialog.Root open={isOpen}>
-        <Button.Root
-          className="w-full md:w-fit md:place-self-end"
-          style="primaryBlue"
-          onClick={() => setIsOpen(true)}
-        >
-          <Button.Text>Criar</Button.Text>
-        </Button.Root>
-        <Dialog.Overlay
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-10 bg-black/50"
-        />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-20 flex w-5/6 max-w-screen-sm -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-lg bg-white p-5 shadow-lg">
-          <header className="flex items-center justify-between">
-            <Dialog.Title className="text-lg font-bold">Criar</Dialog.Title>
-            <Dialog.Close onClick={() => setIsOpen(false)}>
-              <X />
-            </Dialog.Close>
-          </header>
-          <Dialog.Description className="text-xs">
-            Preencha os campos abaixo para cadastrar um novo prato
-          </Dialog.Description>
-          <CreateDishesForm closeModal={() => setIsOpen(false)} />
-        </Dialog.Content>
-      </Dialog.Root>
+      <div className="flex w-full flex-col justify-end gap-2 place-self-end md:flex-row">
+        <Dialog.Root open={isOpenCategoriasForm}>
+          <Button.Root
+            className="w-full md:w-fit md:place-self-end"
+            style="primaryBlue"
+            onClick={() => setIsOpenCategoriasForm(true)}
+            size="sm"
+          >
+            <Button.Text>Criar Categorias</Button.Text>
+          </Button.Root>
+          <Dialog.Overlay
+            onClick={() => setIsOpenCategoriasForm(false)}
+            className="fixed inset-0 z-10 bg-black/50"
+          />
+          <Dialog.Content className="fixed left-1/2 top-1/2 z-20 flex w-5/6 max-w-screen-sm -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-lg bg-white p-5 shadow-lg">
+            <header className="flex items-center justify-between">
+              <Dialog.Title className="text-lg font-bold">Criar</Dialog.Title>
+              <Dialog.Close onClick={() => setIsOpenCategoriasForm(false)}>
+                <X />
+              </Dialog.Close>
+            </header>
+            <Dialog.Description className="text-xs">
+              Preencha os campos abaixo para cadastrar uma nova categoria
+            </Dialog.Description>
+            <CreateCategoriesForm
+              closeModal={() => setIsOpenCategoriasForm(false)}
+            />
+          </Dialog.Content>
+        </Dialog.Root>
+        <Dialog.Root open={isOpen}>
+          <Button.Root
+            className="w-full md:w-fit md:place-self-end"
+            style="primaryBlue"
+            onClick={() => setIsOpen(true)}
+            size="sm"
+          >
+            <Button.Text>Criar Pratos</Button.Text>
+          </Button.Root>
+          <Dialog.Overlay
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 z-10 bg-black/50"
+          />
+          <Dialog.Content className="fixed left-1/2 top-1/2 z-20 flex w-5/6 max-w-screen-sm -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-lg bg-white p-5 shadow-lg">
+            <header className="flex items-center justify-between">
+              <Dialog.Title className="text-lg font-bold">Criar</Dialog.Title>
+              <Dialog.Close onClick={() => setIsOpen(false)}>
+                <X />
+              </Dialog.Close>
+            </header>
+            <Dialog.Description className="text-xs">
+              Preencha os campos abaixo para cadastrar um novo prato
+            </Dialog.Description>
+            <CreateDishesForm closeModal={() => setIsOpen(false)} />
+          </Dialog.Content>
+        </Dialog.Root>
+      </div>
     </header>
   )
 }

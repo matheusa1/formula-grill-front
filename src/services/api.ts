@@ -1,3 +1,4 @@
+import { TCreateCategoriesSchemaOutput } from './../components/molecules/CreateCategoriesForm/types'
 import { TCreateDishesSchemaOutput } from './../components/molecules/CreateDishesForm/types'
 import { TReservationSchemaOutput } from './../components/molecules/ReservationForm/types'
 import { TSignInScheme } from '@/components/molecules/LoginForm/types'
@@ -16,7 +17,10 @@ import {
 import { TUserType } from '@/types/userType'
 import { TCreateChefOutput } from '@/components/molecules/CreateChefForm/types'
 import { TChefResponse, TUpdateChef } from '@/types/chefType'
-import { TCategoriesResponse } from '@/types/categoriesTypes'
+import {
+  TCategoriesResponse,
+  TCreateCAtegoriesResponse,
+} from '@/types/categoriesTypes'
 import { TDishesResponse } from '@/types/dishesTypes'
 
 const api = axios.create({
@@ -236,6 +240,26 @@ export const getAllDishes = async (token: string) => {
       Authorization: `Bearer ${token}`,
     },
   })
+
+  return response.data
+}
+
+export const createCategories = async ({
+  data,
+  token,
+}: {
+  data: TCreateCategoriesSchemaOutput
+  token: string
+}) => {
+  const response = await api.post<TCreateCAtegoriesResponse>(
+    '/categorias',
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 
   return response.data
 }
