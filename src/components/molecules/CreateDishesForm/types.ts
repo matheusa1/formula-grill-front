@@ -1,7 +1,9 @@
+import { TDishesResponse } from '@/types/dishesTypes'
 import { z } from 'zod'
 
 export type TCreateDishesForm = {
   closeModal: () => void
+  data: TDishesResponse
 }
 
 export const createDishesSchama = z.object({
@@ -9,7 +11,16 @@ export const createDishesSchama = z.object({
   description: z.string({ message: 'A descrição é obrigatória' }),
   image: z
     .string({ message: 'A imagem é obrigatória' })
-    .url({ message: 'Informe uma url valida' }),
+    .url({ message: 'Informe uma url valida' })
+    .refine(
+      (value) =>
+        value.includes('.jpg') ||
+        value.includes('.png') ||
+        value.includes('.jpeg'),
+      {
+        message: 'A imagem deve ser um link válido',
+      },
+    ),
   category: z
     .object(
       {

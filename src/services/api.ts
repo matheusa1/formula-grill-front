@@ -21,7 +21,7 @@ import {
   TCategoriesResponse,
   TCreateCAtegoriesResponse,
 } from '@/types/categoriesTypes'
-import { TDishesResponse } from '@/types/dishesTypes'
+import { TDishesResponse, TUpdateDishes } from '@/types/dishesTypes'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -254,6 +254,26 @@ export const createCategories = async ({
   const response = await api.post<TCreateCAtegoriesResponse>(
     '/categorias',
     data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const updateDishes = async ({
+  data,
+  token,
+}: {
+  data: TUpdateDishes
+  token: string
+}) => {
+  const response = await api.patch<TDishesResponse>(
+    `/pratos/${data.id}`,
+    { ...data, id: undefined },
     {
       headers: {
         Authorization: `Bearer ${token}`,

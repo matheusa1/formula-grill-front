@@ -1,11 +1,12 @@
 import { FC } from 'react'
 import { TBodyDishes } from './types'
+import DishesAdminCard from '@/components/molecules/DishesAdminCard'
 
 const BodyDishes: FC<TBodyDishes> = ({ data }) => {
   return (
-    <div className={'flex flex-col gap-3'}>
+    <div className={'grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3'}>
       {data.map((prato, index) => (
-        <p key={index}>{prato.name}</p>
+        <DishesAdminCard key={index} dishesInfo={prato} />
       ))}
     </div>
   )

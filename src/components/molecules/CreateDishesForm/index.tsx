@@ -10,22 +10,30 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form } from '@/components/atoms/Form'
 import { Button } from '@/components/atoms/Button'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { createDishes, getCategories } from '@/services/api'
+import { createDishes, getCategories, updateDishes } from '@/services/api'
 import { useAuth } from '@/context/AuthContext'
 import { TCategoriesResponse } from '@/types/categoriesTypes'
 import { TAxiosErrorApi } from '@/types/error'
 import { toast } from 'react-toastify'
+import { TDishesResponse } from '@/types/dishesTypes'
 
-const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal }) => {
+const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal, data }) => {
   const formMethods = useForm<TCreateDishesSchemaInput>({
     resolver: zodResolver(createDishesSchama),
+    defaultValues: {
+      name: data?.name || '',
+      description: data?.description || '',
+      image: data?.image || '',
+      category:
+        { value: data?.category.id, label: data.category.name } || undefined,
+    },
   })
 
   const queryClient = useQueryClient()
 
   const { token } = useAuth()
 
-  const isUpdate = false
+  const isUpdate = !!data
 
   const { data: categories } = useQuery({
     queryKey: 'categories',
@@ -46,29 +54,47 @@ const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal }) => {
   })
 
   const { mutateAsync: createDishesFn } = useMutation({
-    mutationKey: 'createDishes',
-    mutationFn: createDishes,
+    // @ts-expect-error Erro esperado
+    mutationFn: isUpdate ? updateDishes : createDishes,
 
-    onSuccess: (data) => {
+    onSuccess: (data: TDishesResponse) => {
       formMethods.reset()
-      toast.success('Prato cadastrado com sucesso')
+      toast.success(
+        isUpdate
+          ? 'Prato atualizado com sucesso'
+          : 'Prato cadastrado com sucesso',
+      )
       const cacheData = queryClient.getQueryData('dishes')
 
       console.log({ cacheData })
 
-      queryClient.setQueryData(['dishes'], () => {
-        return [
-          ...(cacheData as []),
-          {
-            ...data,
-          },
-        ]
-      })
+      if (!isUpdate) {
+        queryClient.setQueryData(['dishes'], () => {
+          return [
+            ...(cacheData as []),
+            {
+              ...data,
+            },
+          ]
+        })
+      } else {
+        queryClient.setQueryData(['dishes'], () => {
+          return (cacheData as []).map((dish: TDishesResponse) => {
+            if (dish.id === data.id) {
+              return {
+                ...data,
+              }
+            }
+
+            return dish
+          })
+        })
+      }
 
       closeModal()
     },
 
-    onError: (err) => {
+    onError: (err: unknown) => {
       const typedErr = err as TAxiosErrorApi
 
       if (typedErr.response?.data.statusCode === 409) {
@@ -82,10 +108,17 @@ const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal }) => {
     },
   })
 
-  const onHandleCreate = (data: unknown) => {
-    const typedData = data as TCreateDishesSchemaOutput
+  const onHandleCreate = (formData: unknown) => {
+    const typedData = formData as TCreateDishesSchemaOutput
 
-    createDishesFn({ data: typedData, token: token! })
+    createDishesFn({
+      data: {
+        ...typedData,
+        // @ts-expect-error Erro esperado
+        id: isUpdate ? data.id : undefined,
+      },
+      token: token!,
+    })
   }
 
   return (
