@@ -1,3 +1,4 @@
+import { TCreateDishesSchemaOutput } from './../components/molecules/CreateDishesForm/types'
 import { TReservationSchemaOutput } from './../components/molecules/ReservationForm/types'
 import { TSignInScheme } from '@/components/molecules/LoginForm/types'
 import { TSignUpScheme } from './../components/molecules/SignUpForm/types'
@@ -15,6 +16,8 @@ import {
 import { TUserType } from '@/types/userType'
 import { TCreateChefOutput } from '@/components/molecules/CreateChefForm/types'
 import { TChefResponse, TUpdateChef } from '@/types/chefType'
+import { TCategoriesResponse } from '@/types/categoriesTypes'
+import { TDishesResponse } from '@/types/dishesTypes'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -193,6 +196,42 @@ export const cancelReservation = async ({
 
 export const getAllReservations = async (token: string) => {
   const response = await api.get<TReservationsResponse[]>('/reservas', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const getCategories = async (token: string) => {
+  const response = await api.get<TCategoriesResponse[]>('/categorias', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const createDishes = async ({
+  data,
+  token,
+}: {
+  data: TCreateDishesSchemaOutput
+  token: string
+}) => {
+  const response = await api.post<TDishesResponse>('/pratos', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const getAllDishes = async (token: string) => {
+  const response = await api.get<TDishesResponse[]>('/pratos', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -1,4 +1,4 @@
-import { CalendarCheck, ChefHat, HandPlatter } from 'lucide-react'
+import { Beef, CalendarCheck, ChefHat, HandPlatter } from 'lucide-react'
 
 const iconSize = 24
 
@@ -28,6 +28,16 @@ export const Paths = [
     name: 'Reservas',
     icon: (active?: boolean) => (
       <CalendarCheck
+        size={iconSize}
+        className={active ? 'text-mercedes-blue-500' : 'text-white'}
+      />
+    ),
+  },
+  {
+    path: '/admin/dishes',
+    name: 'Pratos',
+    icon: (active?: boolean) => (
+      <Beef
         size={iconSize}
         className={active ? 'text-mercedes-blue-500' : 'text-white'}
       />
