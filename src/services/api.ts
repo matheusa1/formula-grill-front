@@ -1,3 +1,5 @@
+import { TCreateCategoriesSchemaOutput } from './../components/molecules/CreateCategoriesForm/types'
+import { TCreateDishesSchemaOutput } from './../components/molecules/CreateDishesForm/types'
 import { TReservationSchemaOutput } from './../components/molecules/ReservationForm/types'
 import { TSignInScheme } from '@/components/molecules/LoginForm/types'
 import { TSignUpScheme } from './../components/molecules/SignUpForm/types'
@@ -15,6 +17,11 @@ import {
 import { TUserType } from '@/types/userType'
 import { TCreateChefOutput } from '@/components/molecules/CreateChefForm/types'
 import { TChefResponse, TUpdateChef } from '@/types/chefType'
+import {
+  TCategoriesResponse,
+  TCreateCAtegoriesResponse,
+} from '@/types/categoriesTypes'
+import { TDishesResponse, TUpdateDishes } from '@/types/dishesTypes'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -197,6 +204,82 @@ export const getAllReservations = async (token: string) => {
       Authorization: `Bearer ${token}`,
     },
   })
+
+  return response.data
+}
+
+export const getCategories = async (token: string) => {
+  const response = await api.get<TCategoriesResponse[]>('/categorias', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const createDishes = async ({
+  data,
+  token,
+}: {
+  data: TCreateDishesSchemaOutput
+  token: string
+}) => {
+  const response = await api.post<TDishesResponse>('/pratos', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const getAllDishes = async (token: string) => {
+  const response = await api.get<TDishesResponse[]>('/pratos', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
+  return response.data
+}
+
+export const createCategories = async ({
+  data,
+  token,
+}: {
+  data: TCreateCategoriesSchemaOutput
+  token: string
+}) => {
+  const response = await api.post<TCreateCAtegoriesResponse>(
+    '/categorias',
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
+
+  return response.data
+}
+
+export const updateDishes = async ({
+  data,
+  token,
+}: {
+  data: TUpdateDishes
+  token: string
+}) => {
+  const response = await api.patch<TDishesResponse>(
+    `/pratos/${data.id}`,
+    { ...data, id: undefined },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  )
 
   return response.data
 }

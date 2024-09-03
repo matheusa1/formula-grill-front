@@ -4,6 +4,7 @@ import InitialPage from './initialPage'
 import FoodCarousel from './FoodCarousel'
 import About from './about'
 import Chefs from './Chefs'
+import Dishes from './Dishes'
 
 const Home: FC = () => {
   return (
@@ -11,6 +12,7 @@ const Home: FC = () => {
       <InitialPage />
       <FoodCarousel />
       <About />
+      <Dishes />
       <Chefs />
       <Reservations />
     </div>
