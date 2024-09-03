@@ -9,11 +9,10 @@ import {
   useState,
 } from 'react'
 import { contextType } from './types'
-import { TJWTDecode, TUserType } from '@/types/userType'
+import { TUserType } from '@/types/userType'
 import { TSignInScheme } from '@/components/molecules/LoginForm/types'
-import { login } from '@/services/api'
+import { getUserData, login } from '@/services/api'
 import Cookie from 'js-cookie'
-import { jwtDecode } from 'jwt-decode'
 
 const AuthContext = createContext({} as contextType)
 
@@ -29,23 +28,11 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
 
   const setUserInfo = useCallback(
     async (token: string) => {
-      const decoded: TJWTDecode = await jwtDecode(token)
-
-      if (!decoded) {
-        signOut()
-      }
-
-      if (decoded.exp < Date.now() / 1000) {
-        signOut()
-      }
-
-      setUser({
-        id: decoded.sub,
-        name: decoded.name,
-        email: decoded.email,
-      })
-
-      console.log({ decoded })
+      await getUserData(token)
+        .then((response: TUserType) => setUser(response))
+        .catch(() => {
+          signOut()
+        })
     },
     [signOut],
   )
@@ -76,6 +63,10 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
     return token
   }, [])
 
+  const isAdmin = useCallback(() => {
+    return user?.role === 'ADMIN'
+  }, [user])
+
   useEffect(() => {
     const token = getToken()
 
@@ -86,7 +77,13 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ user, signIn: signIn, signOut, token: getToken() }}
+      value={{
+        user,
+        signIn: signIn,
+        signOut,
+        token: getToken(),
+        isAdmin: isAdmin(),
+      }}
     >
       {children}
     </AuthContext.Provider>

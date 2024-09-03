@@ -14,6 +14,7 @@ const config: Config = {
       dropShadow: {
         yellow: '0 4px 14px rgba(249, 235, 82, 0.5)',
         blue: '0 4px 14px rgba(4, 209, 206, 0.5)',
+        red: '0 4px 14px rgba(220, 53, 69, 0.5)',
       },
       colors: {
         danger: '#DC3545',

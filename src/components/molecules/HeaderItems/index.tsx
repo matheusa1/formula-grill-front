@@ -8,17 +8,28 @@ import { ChevronDown } from 'lucide-react'
 import { Button } from '@/components/atoms/Button'
 import { useWindow } from '@/hooks/useWindow'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
 
 export const HeaderItems: FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { width } = useWindow()
+  const { user, isAdmin } = useAuth()
   const router = useRouter()
+
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
 
   const handleRedirectToLoginPage = () => {
     router.push('/login')
+  }
+
+  const handleRedirectToProfilePage = () => {
+    router.push('/profile')
+  }
+
+  const handleRedirectToAdminPage = () => {
+    router.push('/admin/tables')
   }
 
   return (
@@ -35,9 +46,17 @@ export const HeaderItems: FC = () => {
           <Button.Root
             style={'outline'}
             size="sm"
-            onClick={handleRedirectToLoginPage}
+            onClick={
+              user
+                ? isAdmin
+                  ? handleRedirectToAdminPage
+                  : handleRedirectToProfilePage
+                : handleRedirectToLoginPage
+            }
           >
-            <Button.Text>Entrar</Button.Text>
+            <Button.Text>
+              {user ? (isAdmin ? 'ADMIN' : 'Perfil') : 'Entrar'}
+            </Button.Text>
           </Button.Root>
         )}
       </div>
