@@ -22,8 +22,10 @@ const Dishes: FC = () => {
   })
 
   return (
-    <div className={'flex w-full flex-col gap-5 p-4 text-white'}>
-      <header className="flex flex-col gap-5 text-center text-xl font-bold">
+    <div
+      className={'flex w-full flex-col gap-5 p-4 text-white md:px-10 lg:px-40'}
+    >
+      <header className="flex flex-col gap-5 text-center text-xl font-bold md:text-2xl">
         <h1>Cardápio</h1>
         <p>Do grid de largada ao último garfo, uma experiência única.</p>
       </header>

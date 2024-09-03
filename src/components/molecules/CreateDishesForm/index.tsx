@@ -25,7 +25,7 @@ const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal, data }) => {
       description: data?.description || '',
       image: data?.image || '',
       category:
-        { value: data?.category.id, label: data.category.name } || undefined,
+        { value: data?.category.id, label: data?.category.name } || undefined,
     },
   })
 

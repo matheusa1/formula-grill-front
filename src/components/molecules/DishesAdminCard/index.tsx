@@ -55,7 +55,7 @@ const DishesAdminCard: FC<TDishesAdminCard> = ({ dishesInfo }) => {
         </header>
         <p className="flex w-full gap-2 text-ellipsis whitespace-nowrap">
           <strong>Categoria:</strong>
-          {dishesInfo.categoryId}
+          {dishesInfo.category.name}
         </p>
 
         <p className="flex w-full gap-2 text-ellipsis whitespace-nowrap">

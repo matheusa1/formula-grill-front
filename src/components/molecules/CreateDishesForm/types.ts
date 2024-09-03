@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export type TCreateDishesForm = {
   closeModal: () => void
-  data: TDishesResponse
+  data?: TDishesResponse
 }
 
 export const createDishesSchama = z.object({
