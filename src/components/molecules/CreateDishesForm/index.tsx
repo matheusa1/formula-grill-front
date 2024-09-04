@@ -25,7 +25,7 @@ const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal, data }) => {
       description: data?.description || '',
       image: data?.image || '',
       category:
-        { value: data?.category.id, label: data?.category.name } || undefined,
+        { value: data?.category?.id, label: data?.category?.name } || undefined,
     },
   })
 
@@ -66,7 +66,7 @@ const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal, data }) => {
       )
       const cacheData = queryClient.getQueryData('dishes')
 
-      console.log({ cacheData })
+      console.log({ cacheData, data })
 
       if (!isUpdate) {
         queryClient.setQueryData(['dishes'], () => {
@@ -74,6 +74,10 @@ const CreateDishesForm: FC<TCreateDishesForm> = ({ closeModal, data }) => {
             ...(cacheData as []),
             {
               ...data,
+              category: {
+                id: data.category.id,
+                name: data.category.name,
+              },
             },
           ]
         })
