@@ -31,7 +31,8 @@ const ReservationForm: FC = () => {
   const formMethods = useForm<TReservationSchemaInput>({
     resolver: zodResolver(reservationSchema),
   })
-  const { token } = useAuth()
+
+  const { token, user } = useAuth()
   const router = useRouter()
 
   formMethods.watch('startHour')
@@ -152,10 +153,12 @@ const ReservationForm: FC = () => {
           </Form.Input.Feedback>
         </Form.Input.Root>
         <Button.Root
+          type={user ? 'submit' : 'button'}
           isLoading={isLoading}
           className="w-full md:col-span-2 md:mx-auto md:w-fit"
+          onClick={user ? undefined : () => router.push('/login')}
         >
-          <Button.Text>Reservar</Button.Text>
+          <Button.Text>{user ? 'Reservar' : 'Entrar'}</Button.Text>
         </Button.Root>
       </form>
     </FormProvider>
